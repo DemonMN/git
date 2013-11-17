@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://vipinfo-mn.appspot.com/_ah/api",
+  "root" : "https://shagai1111.appspot.com/_ah/api",
   "name" : "user",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://vipinfo-mn.appspot.com/_ah/spi",
+    "bns" : "https://shagai1111.appspot.com/_ah/spi",
     "deadline" : 10.0,
     "type" : "lily"
   },
@@ -40,7 +40,7 @@
       }
     },
     "user.insert" : {
-      "path" : "user",
+      "path" : "usercollection",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -53,6 +53,28 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "user.child" : {
+      "path" : "user/{parent}",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "controller.UserHandler.add",
+      "request" : {
+        "parameters" : {
+          "parent" : {
+            "type" : "int32",
+            "required" : true
+          }
+        },
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
       }
     }
   },
@@ -67,6 +89,12 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "children" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "User"
+            }
           }
         }
       },
@@ -94,6 +122,11 @@
           "$ref" : "User"
         },
         "response" : {
+          "$ref" : "UserCollection"
+        }
+      },
+      "controller.UserHandler.add" : {
+        "request" : {
           "$ref" : "User"
         }
       }

@@ -14,8 +14,10 @@
 	myModule.controller('userController', function($scope, $http) {
 		$scope.users = [];
 		$scope.save = function (){
-			$http.post('/_ah/api/user/v1/user', $scope.user).success(function(response){
-				$scope.users.push(response);
+			$http.post('/_ah/api/user/v1/usercollection', $scope.user).success(function(response){
+				$scope.users = response.items;
+			}).error(function(error){
+				$scope.error = error;
 			});
 		};
 		$http({
@@ -36,7 +38,15 @@
 	<div>
 		<label>ID:</label> <input type="text" ng-model="user.id" placeholder="Enter a name here"><br /> 
 		<label>Name:</label> <input type="text" ng-model="user.name" placeholder="Enter a name here">
-		<input type="button" ng-click="save()"> {{users}} {{user.id}} {{user.name}} {{user}} {{error}}
+		<input type="button" ng-click="save()"> 
+		<ul class="unstyled">
+	        <li ng-repeat="user in users">
+	          <span>ID : {{user.id}}</span><br/>
+	          <span>Name : {{user.name}}</span>
+	          <a href="#/edit/{{user.$id}}"><i class="icon-pencil"></i></a>
+	        </li>
+      	</ul>
+      	{{error}}
 	</div>
 </body>
 </html>

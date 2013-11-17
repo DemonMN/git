@@ -9,6 +9,7 @@ import model.User;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.Named;
 
 @Api(name = "user")
 public class UserHandler {
@@ -17,9 +18,17 @@ public class UserHandler {
 		users.put(1, new User(1, "Shagai Nyamdorj"));
 	}
 	@ApiMethod(name = "insert")
-	public User insert(User user) {
+	public List<User> insert(User user) {
 		users.put(user.getId(), user);
-		return user;
+		return getAll();
+	}
+	
+	@ApiMethod(name = "child", path = "user/{parent}")
+	public void add(@Named("parent") int id, User child) {
+		if (users.containsKey(id)){
+			users.get(id).add(child);;
+			users.put(child.getId(), child);
+		}
 	}
 	
 	@ApiMethod(name = "all")
