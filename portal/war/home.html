@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Home</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.min.js"></script>
+<script src="js/angular-ui.js"></script>
+<style>
+	body {
+		font: 13px/18px 'Open Sans',arial,sans-serif;
+		font-weight: 300;
+		text-align: center;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		font-weight: 400;
+	}
+	#main{
+		margin: 0 auto;
+		width: 1200px;
+	}
+	ul{
+		list-style: none;
+		display: block;
+	}
+	#category li{
+		display: table-cell;
+		width: 220px;
+	}
+	a, a:hover, a:active {
+		color: #39f;
+		text-decoration: none;
+	}
+	#category li a{
+		background: #FFF;
+		padding : 5px;
+		vertical-algin: middle;
+	}
+	.active{
+		background: #FF0000;
+	}
+</style>
+<script>
+var homeModule = angular.module('homeModule', []);
+homeModule.controller('userController', function($scope, $http) {
+	var data = [ 'Улс төр', 'Эдийн засаг', 'Спорт', 'Facebook' ];
+	
+	$scope.categories = [];
+	angular.forEach(data, function (title){
+		$scope.categories.push({ 'title' : title, active : 'inactive'})
+	});
+	$scope.hover = function (category){
+		if ($scope.active){
+			$scope.active.active = 'inactive';
+		}
+		category.active = 'active';
+		$scope.active = category;
+	}
+});
+</script>
+
+</head>
+
+<body ng-app="homeModule" ng-controller="userController">
+	<div id="main">
+		<ul id="category">
+			<li ng-repeat="category in categories" class="{{category.active}}" ng-mouseover="hover(category)" ><a href="">{{category.title}}</a></li>
+		</ul>
+	</div>
+</body>
+</html>

@@ -36,6 +36,13 @@
 
 <body ng-app="myModule" ng-controller="userController">
 	<div>
+		<div id="fb-root"></div>
+		<script src="https://connect.facebook.net/en_US/all.js#appId=236027393115554&xfbml=1"></script>
+		<fb:registration 
+		  fields="[{'name':'name'},{'name':'birthday'},{'name':'gender'},{'name':'location'},{'name':'email'},{'name':'phone','description':'Phone Number','type':'text'}]" 
+		  redirect-uri="http://localhost:8888/portal"
+		  width="530">
+		</fb:registration>
 		<label>ID:</label> <input type="text" ng-model="user.id" placeholder="Enter a name here"><br /> 
 		<label>Name:</label> <input type="text" ng-model="user.name" placeholder="Enter a name here">
 		<input type="button" ng-click="save()"> 
@@ -46,6 +53,7 @@
 	          <a href="#/edit/{{user.$id}}"><i class="icon-pencil"></i></a>
 	        </li>
       	</ul>
+      	<img src="http://graph.facebook.com/592469092/picture?type=large" />
       	{{error}}
 	</div>
 </body>

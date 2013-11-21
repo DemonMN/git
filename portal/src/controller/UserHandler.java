@@ -9,6 +9,7 @@ import model.User;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 
 @Api(name = "user")
@@ -20,6 +21,15 @@ public class UserHandler {
 	@ApiMethod(name = "insert")
 	public List<User> insert(User user) {
 		users.put(user.getId(), user);
+		return getAll();
+	}
+	
+	@ApiMethod(
+		name = "create",
+		httpMethod	= HttpMethod.POST		
+	)
+	public List<User> create(@Named("user")String user) {
+		
 		return getAll();
 	}
 	
